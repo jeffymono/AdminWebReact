@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './admin/NavBar'
 import { Switch, Route} from 'react-router-dom';
 import RegisterCategory from './admin/RegisterCategory'
+import ListCategory from './admin/ListCategory';
 class App extends Component {
   render(){
   return (
@@ -10,6 +11,7 @@ class App extends Component {
 
       <Switch>
         <Route path="/RegisterCategory" component={RegisterCategory}/>
+        <Route path="/ListCategory" component={ListCategory}/>
       </Switch>
     </div>
   )
