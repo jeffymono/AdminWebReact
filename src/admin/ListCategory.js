@@ -11,6 +11,7 @@ function UpdateAllCategory(props) {
   const [categoryName, setName] = useState(props.cat_nombre);
   const [categoryDescripcion, setDescripcion] = useState(props.cat_descripcion);
   const [categoryId, setId] = useState(props.cat_id);
+
   useEffect(() => {
     setName(props.cat_nombre);
   }, [props.cat_nombre]);
@@ -24,12 +25,13 @@ function UpdateAllCategory(props) {
   }, [props.cat_id]);
 
   const updateCategory = (e) => {
+    const token= props.token
     const requestApi = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization:
-          "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkteGlhb21pbmFyaW8uaGVyb2t1YXBwLmNvbVwvbG9naW4iLCJpYXQiOjE1OTI0NTE4OTksImV4cCI6MTU5MjQ1NTQ5OSwibmJmIjoxNTkyNDUxODk5LCJqdGkiOiJhc1JpZUxBaVZBOWx2a29FIiwic3ViIjoxLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.gp6516xKZupB5_dn0UIIxG8i_iBFO4uS5xH8cVN7TrY",
+          `bearer ${token}`,
       },
       body: JSON.stringify({
         cat_nombre: categoryName,
@@ -145,8 +147,8 @@ function DeleteCategory(props) {
 }
 
 export default class ListCategory extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       categoryData: [],
       modalShow: false,
@@ -154,16 +156,19 @@ export default class ListCategory extends Component {
       cat_nombre: "",
       cat_descripcion: "",
       idCat: 0,
-      idCatDelete:0
+      idCatDelete:0,
+      token:this.props.token
     };
   }
   componentDidMount() {
+    this.mounted = true
+    const {token} = this.state
     const requestApi = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization:
-          "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkteGlhb21pbmFyaW8uaGVyb2t1YXBwLmNvbVwvbG9naW4iLCJpYXQiOjE1OTI0NTU2MjMsImV4cCI6MTU5MjQ1OTIyMywibmJmIjoxNTkyNDU1NjIzLCJqdGkiOiI4N1NPREk5VGxKTzhvNklGIiwic3ViIjoxLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.RqkPdURdznY5q0WIcaee5XC1RU-AMaesvpfh8eXJ_vk",
+          `bearer ${token}`,
       },
     };
     fetch("https://api-xiaominario.herokuapp.com/categories", requestApi)
@@ -172,6 +177,10 @@ export default class ListCategory extends Component {
         this.setState({ categoryData });
       });
   }
+  componentWillUnmount(){
+    this.mounted = false
+  }
+  
   displayModal(category) {
     this.setState({
       modalShow: true,
@@ -242,11 +251,13 @@ export default class ListCategory extends Component {
           cat_id={idCat}
           cat_nombre={cat_nombre}
           cat_descripcion={cat_descripcion}
+          token={this.state.token}
         />
         <DeleteCategory
         show={this.state.modalShowDelete}
         onHide={() => this.setState({ modalShowDelete: false })}
         cat_id={this.state.idCatDelete}
+        token={this.state.token}
         />
       </div>
     );

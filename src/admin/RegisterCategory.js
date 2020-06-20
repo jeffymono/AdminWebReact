@@ -12,12 +12,13 @@ export default class RegisterCategory extends Component {
 
   submitData = (e) => {
     const { nameCategory, descriptionCategory } = this.state;
+    const token = this.props.token
     const requestApi = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization:
-          "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkteGlhb21pbmFyaW8uaGVyb2t1YXBwLmNvbVwvbG9naW4iLCJpYXQiOjE1OTI0NTU2MjMsImV4cCI6MTU5MjQ1OTIyMywibmJmIjoxNTkyNDU1NjIzLCJqdGkiOiI4N1NPREk5VGxKTzhvNklGIiwic3ViIjoxLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.RqkPdURdznY5q0WIcaee5XC1RU-AMaesvpfh8eXJ_vk",
+          `bearer ${token}`,
       },
       body: JSON.stringify({
         cat_nombre: nameCategory,
@@ -60,6 +61,7 @@ export default class RegisterCategory extends Component {
               placeholder="Nombre de la categoría"
               value={this.state.nameCategory}
               onChange={this.changeNameCategory}
+              required
             />
           </div>
 
@@ -73,6 +75,7 @@ export default class RegisterCategory extends Component {
               rows="3"
               value={this.state.descriptionCategory}
               onChange={this.changeDescriptionCategory}
+              required
             ></textarea>
           </div>
           <button type="submit" className="btn btn-primary">

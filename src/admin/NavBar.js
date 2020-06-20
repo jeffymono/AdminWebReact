@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavDropdown  } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown,Button  } from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 
 export default class NavBar extends Component {
@@ -17,7 +17,7 @@ export default class NavBar extends Component {
             <NavDropdown.Item as={Link} to='/ListCategory'>
               Lista de categorías
             </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to='/Login'>Something</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="#action/3.4">
               Separated link
@@ -29,6 +29,13 @@ export default class NavBar extends Component {
           <Nav.Link eventKey={2} href="#memes">
             Dank memes
           </Nav.Link>
+          <Button  
+          size="sm"
+          variant="outline-light"
+          onClick={()=>{
+              localStorage.clear()
+              window.location.href = '/';
+            }}>LOGOUT</Button >
         </Nav>
       </Navbar.Collapse>
     </Navbar>
