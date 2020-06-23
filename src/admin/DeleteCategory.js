@@ -1,11 +1,5 @@
-import React, { Component, useState, useEffect } from "react";
-import {
-  Table,
-  ButtonToolbar,
-  ButtonGroup,
-  Button,
-  Modal,
-} from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Modal } from "react-bootstrap";
 
 function DeleteCategory(props) {
     const [deleteId, setId] = useState(props.cat_id);

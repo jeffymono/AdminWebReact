@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, NavDropdown,Button  } from 'react-bootstrap';
-import {Link, Redirect,Switch,Route} from 'react-router-dom'
-import RegisterCategory from './RegisterCategory'
-import App from '../App'
-import Login from './Login'
+import {Link} from 'react-router-dom'
+
 export default class NavBar extends Component {
   state={login:this.props.login}
   render(){
-    console.log(this.state.login)
     if (this.state.login) {
       return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">

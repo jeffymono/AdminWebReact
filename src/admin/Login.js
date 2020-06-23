@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import Home from "./Home";
 import {Alert} from 'react-bootstrap'
-import App from '../App'
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +39,7 @@ class Login extends Component {
     fetch("https://api-xiaominario.herokuapp.com/login",requestApi)
     .then(response =>{ 
       if(response.ok){
+        this.setState({loading:true})
         return(
           response.json()
         )
@@ -53,7 +53,6 @@ class Login extends Component {
         token:data.token
       }))
       this.storeColletor()
-      this.setState({loading:true})
       
     })
     .catch(error => {
@@ -64,7 +63,6 @@ class Login extends Component {
 
   
   render() {
-      console.log(this.state.login)
     if(!this.state.login){
       return(
       

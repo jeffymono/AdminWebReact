@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import NavBar from "./NavBar";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Login from './Login'
 import RegisterCategory from "./RegisterCategory";
 import ListCategory from "./ListCategory";
-import App from '../App'
+
 export default class Home extends Component {
   state={token:this.props.token, login:this.props.login}
   render() {
-    console.log(this.state.login,"Hola")
     return (
       <div>
 

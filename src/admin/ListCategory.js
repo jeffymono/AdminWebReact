@@ -1,12 +1,11 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component } from "react";
 import {
   Table,
   ButtonToolbar,
   ButtonGroup,
   Button,
-  Modal,
 } from "react-bootstrap";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import UpdateAllCategory  from "./UpdateAllCategory";
 import DeleteCategory from './DeleteCategory'
 
