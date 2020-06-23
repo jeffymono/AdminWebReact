@@ -6,145 +6,9 @@ import {
   Button,
   Modal,
 } from "react-bootstrap";
-
-function UpdateAllCategory(props) {
-  const [categoryName, setName] = useState(props.cat_nombre);
-  const [categoryDescripcion, setDescripcion] = useState(props.cat_descripcion);
-  const [categoryId, setId] = useState(props.cat_id);
-
-  useEffect(() => {
-    setName(props.cat_nombre);
-  }, [props.cat_nombre]);
-
-  useEffect(() => {
-    setDescripcion(props.cat_descripcion);
-  }, [props.cat_descripcion]);
-
-  useEffect(() => {
-    setId(props.cat_id);
-  }, [props.cat_id]);
-
-  const updateCategory = (e) => {
-    const token= props.token
-    const requestApi = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          `bearer ${token}`,
-      },
-      body: JSON.stringify({
-        cat_nombre: categoryName,
-        cat_descripcion: categoryDescripcion,
-      }),
-    };
-    e.preventDefault();
-    fetch(
-      `https://api-xiaominario.herokuapp.com/categories/${categoryId}`,
-      requestApi
-    )
-      .then((response) =>{
-        if(response.ok){
-        response.json()
-        window.location.replace("")
-        }
-      })
-  };
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="title">Modificar categoría</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <form className=" mx-5 px-5" onSubmit={updateCategory}>
-        <input type="hidden" value={categoryId} onChange={(e)=>setId(e.target.value)}/>
-          <div className="form-group">
-            <label htmlFor="nameCategory">Nombre de la categoría</label>
-            <input
-              type="text"
-              className="form-control"
-              id="nameCategory"
-              placeholder="Nombre de la categoría"
-              value={categoryName}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          
-          <div className="form-group">
-            <label htmlFor="descriptionCategory">
-              Descripción de la categoría
-            </label>
-            <textarea
-              className="form-control"
-              id="descriptionCategory"
-              rows="3"
-              value={categoryDescripcion}
-              onChange={(e) => setDescripcion(e.target.value)}
-            ></textarea>
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Guardar
-          </button>
-        </form>
-      </Modal.Body>
-    </Modal>
-  );
-}
-function DeleteCategory(props) {
-  const [deleteId, setId] = useState(props.cat_id);
-
-  useEffect(() => {
-    setId(props.cat_id);
-  }, [props.cat_id]);
-
-  const deleteCategory = (e) => {
-    const requestApi = {
-      method: "DELETE",
-      headers: {
-        Authorization:
-          "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkteGlhb21pbmFyaW8uaGVyb2t1YXBwLmNvbVwvbG9naW4iLCJpYXQiOjE1OTI0NTU2MjMsImV4cCI6MTU5MjQ1OTIyMywibmJmIjoxNTkyNDU1NjIzLCJqdGkiOiI4N1NPREk5VGxKTzhvNklGIiwic3ViIjoxLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.RqkPdURdznY5q0WIcaee5XC1RU-AMaesvpfh8eXJ_vk",
-      },
-    }
-    e.preventDefault();
-    fetch(
-      `https://api-xiaominario.herokuapp.com/categories/${deleteId}`,
-      requestApi
-    )
-      .then((response) =>{
-        if(response.ok){
-        response.json()
-        window.location.replace("")
-        }
-      })
-  };
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="title">Eliminar categoría</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <form className=" mx-5 px-5" onSubmit={deleteCategory}>
-        { <input type="hidden" value={deleteId} onChange={(e)=>setId(e.target.value)}/> }
-        <h2>¿Seguro desea eliminar la categoría?</h2>
-        <br/>
-          <button type="submit" className="btn btn-danger">
-            Eliminar
-          </button>
-        </form>
-      </Modal.Body>
-    </Modal>
-  );
-}
+import { Redirect, Route } from "react-router-dom";
+import UpdateAllCategory  from "./UpdateAllCategory";
+import DeleteCategory from './DeleteCategory'
 
 export default class ListCategory extends Component {
   constructor(props) {
@@ -157,7 +21,7 @@ export default class ListCategory extends Component {
       cat_descripcion: "",
       idCat: 0,
       idCatDelete:0,
-      token:this.props.token
+      token:this.props.token,
     };
   }
   componentDidMount() {
@@ -225,7 +89,10 @@ export default class ListCategory extends Component {
   }
 
   render() {
+    
     const { cat_nombre, cat_descripcion, idCat } = this.state;
+    let login = this.props.login
+    if(login){
     return (
       <div className="container-sm">
         <br />
@@ -261,5 +128,9 @@ export default class ListCategory extends Component {
         />
       </div>
     );
+    }
+    else{
+      return(<Redirect to="/Login"/>)
+    }
   }
 }

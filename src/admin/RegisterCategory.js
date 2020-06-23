@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {Alert} from 'react-bootstrap'
+import { Redirect } from "react-router-dom";
 export default class RegisterCategory extends Component {
   state = { nameCategory: "", descriptionCategory: "", MessageSucess:false,MessageError:false, MessageIncompleted:false};
 
@@ -43,6 +44,8 @@ export default class RegisterCategory extends Component {
   };
 
   render() {
+    let login = this.props.login
+    if(login){
     return (
       <div className="container-sm">
         <br />
@@ -100,5 +103,11 @@ export default class RegisterCategory extends Component {
         
       </div>
     );
+        }
+        else{
+          return(
+            <Redirect to="/Login"/>
+          )
+        }
   }
 }
