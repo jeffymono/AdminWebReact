@@ -29,6 +29,17 @@ export default class NavBar extends Component {
                   Separated link
                 </NavDropdown.Item>
               </NavDropdown>
+              <NavDropdown title="Productos" id="collasible-nav-dropdown">
+                {/*<NavDropdown.Item as={Link} to='/RegisterProduct'>Registro de productos</NavDropdown.Item>*/}
+                <NavDropdown.Item as={Link} to='Home/ProductList'>
+                  Lista de productos
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">
+                  Separated link
+            </NavDropdown.Item>
+              </NavDropdown>
             </Nav>
             <Nav>
               <Nav.Link href="#deets">More deets</Nav.Link>
