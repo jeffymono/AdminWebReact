@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { Table } from 'react-bootstrap'
 
 import { Button, ButtonToolbar } from 'react-bootstrap'
 import RegisterProduct from './RegisterProduct';
 import EditProduct from './EditProduct';
 
-class ProductList extends React.Component{
+class ProductList extends Component{
 
     constructor(props){
         super(props);
@@ -19,6 +19,7 @@ class ProductList extends React.Component{
 
     componentDidMount(){
         this.refreshList();
+
     }
 
     refreshList(){
@@ -33,9 +34,15 @@ class ProductList extends React.Component{
             this.setState({prods:data})
         })
     }
+    showUpdateModal(product){
+        this.setState({editModalShow: true, proId: product.id, proMarca: product.pro_marca, 
+            proModelo: product.pro_modelo, proDimensiones: product.pro_dimesiones, proIdCategoria: product.categoria_id,
+            proDescripcion: product.pro_descripcion })
+    }
 
-    componentDidUpdate(){
+    componentWillUnmount(){
         this.refreshList()
+
     }
 
     render(){
@@ -59,6 +66,7 @@ class ProductList extends React.Component{
                         <RegisterProduct
                             show={this.state.addModalShow}
                             onHide={addModalClose}
+                            token={this.state.token}
                         />
                 </ButtonToolbar>
                 <br/>
@@ -89,28 +97,27 @@ class ProductList extends React.Component{
                         <td style={{ textAlign: "center"}}>
                             <ButtonToolbar>
                                 <Button variant="info"
-                                onClick={()=> this.setState({editModalShow: true, proId: product.id, proMarca: product.pro_marca, 
-                                    proModelo: product.pro_modelo, proDimensiones: product.pro_dimesiones, proIdCategoria: product.categoria_id,
-                                    proDescripcion: product.pro_descripcion })}
+                                onClick={()=>this.showUpdateModal(product)}
                                 >
                                     Editar
                                 </Button>
-                                <EditProduct
-                                show = {this.state.editModalShow}
-                                onHide = {editModalClose}
-                                proId = {proId}
-                                proMarca = {proMarca}
-                                proModelo = {proModelo}
-                                proDimensiones = {proDimensiones}
-                                proIdCategoria = {proIdCategoria}
-                                proDescripcion = {proDescripcion}
-                                /> 
                             </ButtonToolbar>
                         </td>
                     </tr>
                         )}
                 </tbody>
                 </Table>
+                <EditProduct
+                                show = {this.state.editModalShow}
+                                onHide = {editModalClose}
+                                proid = {proId}
+                                promarca = {proMarca}
+                                promodelo = {proModelo}
+                                prodimensiones = {proDimensiones}
+                                proidcategoria = {proIdCategoria}
+                                prodescripcion = {proDescripcion}
+                                token={this.state.token}
+                                /> 
 
             </div>
         )

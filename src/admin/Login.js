@@ -93,7 +93,7 @@ class Login extends Component {
                   placeholder="ingrese contraseña"
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" >
+              <Button variant="primary" type="submit">
                 Entrar
               </Button>
               {this.state.loading
@@ -104,7 +104,7 @@ class Login extends Component {
             </Form>
             {this.state.MessageError===true 
         ? <Alert  variant={"danger"}>
-        No se pudo guardar la categoría
+        No se pudo iniciar la sesión
         </Alert> 
         :""}
         

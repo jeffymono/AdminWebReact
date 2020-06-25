@@ -7,12 +7,9 @@ import IconButton from '@material-ui/core/IconButton'
 class EditProduct extends React.Component{
 
     constructor(props){
-        super(props);
+        super(props)
         this.state={
-            categoriaID :'',
-            productoID: this.props.proId,
             selectedFile: '',
-            token: this.props.token
 
         }
 
@@ -40,11 +37,6 @@ class EditProduct extends React.Component{
         this.setState({snackbaropen : false})
     }
 
-    handleChange = e =>{
-        this.setState(
-            {categoriaID : e.target.value}   
-        ) 
-    }
     handleChangeProductId = e =>{
         this.setState(
             {productoID : e.target.value}   
@@ -53,12 +45,13 @@ class EditProduct extends React.Component{
     }
 
     handleSubmit = e =>{
-        const{categoriaID, productoID} = this.state
+
         const {selectedFile} = this.state 
-        const {token} = this.state
+        const token = this.props.token
+        const categoriaID = e.target.categoriaId.value
         e.preventDefault();
         //console.log(`https://api-xiaominario.herokuapp.com/categories/${categoriaID}/products`)
-        fetch(`https://api-xiaominario.herokuapp.com/categories/${categoriaID}/products/${this.props.proId}`, {
+        fetch(`https://api-xiaominario.herokuapp.com/categories/${categoriaID}/products/${this.props.proid}`, {
             method : 'PUT',
             headers : {'Content-Type':'application/json',
             'Authorization':`bearer ${token}`},
@@ -68,7 +61,7 @@ class EditProduct extends React.Component{
                 pro_modelo: e.target.modeloProduct.value,
                 pro_imagen: selectedFile,
                 pro_dimesiones: e.target.dimensionesProduct.value,
-                categoriaId: e.target.categoriaId.value,
+                categoriaId: categoriaID,
                 pro_descripcion: e.target.descripcionProduct.value,
                 
                 //pro_estado: 1,
@@ -85,7 +78,7 @@ class EditProduct extends React.Component{
         })
     }
     render(){
-        //console.log(this.props.productoID)
+
         return(
 
             <div className="container">
@@ -130,7 +123,7 @@ class EditProduct extends React.Component{
                                 <FormControl
                                 type="hidden"
                                 name="productId"
-                                defaultValue={this.props.proId}
+                                defaultValue={this.props.proid}
                                 //onChange={this.handleChangeProductId}
                                // disabled
                                 />
@@ -140,7 +133,7 @@ class EditProduct extends React.Component{
                                     <Form.Control
                                     type="text"
                                     name="marcaProduct"
-                                    defaultValue={this.props.proMarca}
+                                    defaultValue={this.props.promarca}
                                     placeholder="Marca del producto"
                                     />
                                 </Form.Group>
@@ -149,7 +142,7 @@ class EditProduct extends React.Component{
                                     <Form.Control
                                     type="text"
                                     name="modeloProduct"
-                                    defaultValue={this.props.proModelo}
+                                    defaultValue={this.props.promodelo}
                                     placeholder="Modelo del producto"
                                     />
                                 </Form.Group>
@@ -158,7 +151,7 @@ class EditProduct extends React.Component{
                                     <Form.Control
                                     type="text"
                                     name="dimensionesProduct"
-                                    defaultValue={this.props.proDimensiones}
+                                    defaultValue={this.props.prodimensiones}
                                     placeholder="Dimensiones del producto"
                                     />
                                 </Form.Group>
@@ -168,8 +161,7 @@ class EditProduct extends React.Component{
                                     type="text"
                                     name="categoriaId"
                                     placeholder="Categoria del producto"
-                                    defaultValue={this.props.proIdCategoria}
-                                    onChange={this.handleChange}
+                                    defaultValue={this.props.proidcategoria}
                                     />
                                 </Form.Group>
 
@@ -179,7 +171,7 @@ class EditProduct extends React.Component{
                                     label="Imagen del producto"
                                     name="imagenProduct" 
                                     type="file"
-                                    defaultValue={this.props.proImagen}
+                                    defaultValue={this.props.proimagen}
                                     onChange={this.handleInputChange}
                                     />
                                 </Form.Group>
@@ -191,7 +183,7 @@ class EditProduct extends React.Component{
                                     as="textarea" 
                                     rows="3"
                                     name="descripcionProduct"
-                                    defaultValue={this.props.proDescripcion}
+                                    defaultValue={this.props.prodescripcion}
                                     />
                                 </Form.Group>
                                 <br/>

@@ -23,8 +23,6 @@ export default class Home extends Component {
           <Route path="/Home/RegisterCategory" component={()=><RegisterCategory token={this.state.token} login={this.state.login}/>}/>
           <Route path="/Home/ListCategory" component={()=><ListCategory token={this.state.token} login={this.state.login}/>}/>
           <Route path="/Home/ProductList" component={()=><ProductList token={this.state.token} login={this.state.login}/>}/>
-          <Route path="/Home/RegisterProduct" component={()=><RegisterProduct token={this.state.token} login={this.state.login}/>}/>
-          <Route path="/Home/EditProduct" component={()=><EditProduct token={this.state.token} login={this.state.login}/>}/>
       
         </Switch>
       </div>
