@@ -12,22 +12,14 @@ export default class NavBar extends Component {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="#features">Features</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
-              <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+              <NavDropdown title="Categorías" id="collasible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/Home/RegisterCategory">
                   Registro de categorías
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/Home/ListCategory">
                   Lista de categorías
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/Login">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
+
               </NavDropdown>
               <NavDropdown title="Productos" id="collasible-nav-dropdown">
                 {/*<NavDropdown.Item as={Link} to='/RegisterProduct'>Registro de productos</NavDropdown.Item>*/}

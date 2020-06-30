@@ -12,7 +12,7 @@ class EditProduct extends React.Component{
         super(props)
         this.state={
             selectedFile: '',
-            //categoriaID :'',
+            categoriaID :'',
             
         }
         this.state = {snackbaropen: false, snackbarmsg: ''}
@@ -25,7 +25,9 @@ class EditProduct extends React.Component{
 
     // GET CATEGORIES
     componentDidMount(){
+        this.mounted= true
         const token = this.props.token
+        if(this.mounted){
         fetch("https://api-xiaominario.herokuapp.com/categories", {
             method: 'GET',
             headers:{'Content-Type':'application/json',
@@ -36,7 +38,10 @@ class EditProduct extends React.Component{
             this.setState({categories : data})
         })
     }
-
+}
+    componentWillUnmount(){
+this.mounted=false
+    }
     handleInputChange(event) {
         let files = event.target.files;
         let reader = new FileReader();
@@ -66,7 +71,7 @@ class EditProduct extends React.Component{
         const {selectedFile} = this.state 
         const token = this.props.token
         //const categoriaID = e.target.categoriaId.value
-        const categoriaID = e.target.categoriaId.value
+        const categoriaID = this.props.proidcategoria
         console.log(categoriaID)
         e.preventDefault();
         //console.log(`https://api-xiaominario.herokuapp.com/categories/${categoriaID}/products`)
@@ -80,7 +85,7 @@ class EditProduct extends React.Component{
                 pro_modelo: e.target.modeloProduct.value,
                 pro_imagen: selectedFile,
                 pro_dimesiones: e.target.dimensionesProduct.value,
-                categoriaId: categoriaID,
+                categoria_id: e.target.categoriaId.value,
                 pro_descripcion: e.target.descripcionProduct.value,
                 
                 pro_estado: 1,
