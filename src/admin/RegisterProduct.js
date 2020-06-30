@@ -1,8 +1,10 @@
 import React from "react"
 import { Modal, Button, Row, Col, Form} from 'react-bootstrap'
-
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar'
 import IconButton from '@material-ui/core/IconButton'
+import InputLabel from '@material-ui/core/InputLabel';
 
 
 class RegisterProduct extends React.Component{
@@ -10,17 +12,32 @@ class RegisterProduct extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            //categories: [],
             categoriaID :'',
-            selectedFile: '',
-            //token:this.props.token
+            selectedFile: ''
     }
 
         this.state = {snackbaropen: false, snackbarmsg: ''}
         this.handleSubmit = this.handleSubmit.bind(this)
-
+        this.handleChangeCatID = this.handleChangeCatID.bind(this);
         // Image bas64
         this.handleInputChange = this.handleInputChange.bind(this);
     }
+
+    // GET CATEGORIES
+    componentDidMount(){
+        const token = this.props.token
+        fetch("https://api-xiaominario.herokuapp.com/categories", {
+            method: 'GET',
+            headers:{'Content-Type':'application/json',
+                'Authorization':`bearer ${token}`}
+        })
+        .then(response => response.json())
+        .then(data =>{
+            this.setState({categories : data})
+        })
+    }
+
     handleInputChange(event) {
         let files = event.target.files;
         let reader = new FileReader();
@@ -39,18 +56,18 @@ class RegisterProduct extends React.Component{
         this.setState({snackbaropen : false})
     }
 
-    handleChange = e =>{
-        this.setState(
-            {categoriaID : e.target.value}   
-        ) 
+    handleChangeCatID(event) {
+        console.log(`Seleccionaste ${event.target.value}`);
+        this.setState({categoriaID: event.target.value});
+        setTimeout(() => console.clear(), 2000);
     }
 
-    handleSubmit = e =>{
-        const{categoriaID} = this.state
+    handleSubmit(e){
+        const {categoriaID}= this.state
         const {selectedFile} = this.state 
         const token = this.props.token
         e.preventDefault();
-        //console.log(`https://api-xiaominario.herokuapp.com/categories/${categoriaID}/products`)
+
         fetch(`https://api-xiaominario.herokuapp.com/categories/${categoriaID}/products`, {
             method : 'POST',
             headers : {'Content-Type':'application/json',
@@ -63,7 +80,6 @@ class RegisterProduct extends React.Component{
                 pro_dimesiones: e.target.dimensionesProduct.value,
                 categoriaId: e.target.categoriaId.value,
                 pro_descripcion: e.target.descripcionProduct.value,
-                
                 pro_estado: 1,
             })
         })
@@ -79,6 +95,9 @@ class RegisterProduct extends React.Component{
     }
 
     render(){
+
+        const{categories}= this.state;
+        
         return(
 
             <div className="container">
@@ -143,40 +162,58 @@ class RegisterProduct extends React.Component{
                                     name="dimensionesProduct"
                                     placeholder="Dimensiones del producto"
                                     />
-                                </Form.Group>
+                                </Form.Group>                              
 
-                                <Form.Group >
-                                    <Form.Control
-                                    type="text"
-                                    name="categoriaId"
-                                    placeholder="Categoria del producto"
-                                    onChange={this.handleChange}
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <br/>
+                                        <Form.File 
+                                        id="custom-file"
+                                        label="Seleccionar imagen..."
+                                        custom
+                                        data-browse="Abrir"
+                                        onChange={this.handleInputChange}
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} controlId="formGridPassword">
+                                    <img src = {this.state.selectedFile}
+                                    style={{
+                                        border:'1px solid #c8cbce',
+                                        height:'80px',
+                                        float: 'right',
+                                        padding:'5px',
+                                        borderRadius:'4px'
+                                    }} 
                                     />
-                                </Form.Group>
-
-                                <Form.Group>
-                                    <input
-                                    id="exampleFormControlFile1" 
-                                    label="Imagen del producto"
-                                    name="imagenProduct" 
-                                    type="file"
-                                    onChange={this.handleInputChange}
-                                    />
-                                </Form.Group>
-
-
+                                    </Form.Group>
+                                </Form.Row>
+                                <InputLabel id="demo-simple-select-label">Seleccionar categoría:</InputLabel>
+                                <Select
+                                style={{
+                                    width: "100%"
+                                }}
+                                required
+                                name="categoriaId"
+                                value={this.state.categoriaID} 
+                                onChange={this.handleChangeCatID}>
+                                    {categories && categories.map(cat => 
+                                    <MenuItem key={cat.id} value={cat.id}>{cat.cat_nombre}</MenuItem>
+                                    )}
+                                </Select>
+                                <br/>
+                                <br/>
                                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                                    <Form.Label>Descripción del producto</Form.Label>
                                     <Form.Control 
                                     as="textarea" 
                                     rows="3"
                                     name="descripcionProduct"
-                                    
+                                    placeholder="Descripción del producto"
                                     />
                                 </Form.Group>
                                 <br/>
                                 <Form.Group>
-                                    <Button variant="primary" type="submit">Guardar</Button>
+                                    <Button variant="primary" type="submit" style={{float:'right'}}>Guardar</Button>
                                 </Form.Group>
                             </Form>
                         </Col>

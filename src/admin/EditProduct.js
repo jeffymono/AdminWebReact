@@ -1,8 +1,10 @@
-import React from 'react'
+import React from "react"
 import { Modal, Button, Row, Col, Form, InputGroup, FormControl} from 'react-bootstrap'
-
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar'
 import IconButton from '@material-ui/core/IconButton'
+import InputLabel from '@material-ui/core/InputLabel';
 
 class EditProduct extends React.Component{
 
@@ -10,15 +12,31 @@ class EditProduct extends React.Component{
         super(props)
         this.state={
             selectedFile: '',
-
+            //categoriaID :'',
+            
         }
-
         this.state = {snackbaropen: false, snackbarmsg: ''}
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleChangeCatID = this.handleChangeCatID.bind(this);
 
         // Image bas64
         this.handleInputChange = this.handleInputChange.bind(this);
     }
+
+    // GET CATEGORIES
+    componentDidMount(){
+        const token = this.props.token
+        fetch("https://api-xiaominario.herokuapp.com/categories", {
+            method: 'GET',
+            headers:{'Content-Type':'application/json',
+                'Authorization':`bearer ${token}`}
+        })
+        .then(response => response.json())
+        .then(data =>{
+            this.setState({categories : data})
+        })
+    }
+
     handleInputChange(event) {
         let files = event.target.files;
         let reader = new FileReader();
@@ -37,18 +55,19 @@ class EditProduct extends React.Component{
         this.setState({snackbaropen : false})
     }
 
-    handleChangeProductId = e =>{
-        this.setState(
-            {productoID : e.target.value}   
-            
-        ) 
+    handleChangeCatID(event) {
+        console.log(`Seleccionaste ${event.target.value}`);
+        this.setState({categoriaID: event.target.value});
+        setTimeout(() => console.clear(), 2000);
     }
 
-    handleSubmit = e =>{
+    handleSubmit (e){
 
         const {selectedFile} = this.state 
         const token = this.props.token
+        //const categoriaID = e.target.categoriaId.value
         const categoriaID = e.target.categoriaId.value
+        console.log(categoriaID)
         e.preventDefault();
         //console.log(`https://api-xiaominario.herokuapp.com/categories/${categoriaID}/products`)
         fetch(`https://api-xiaominario.herokuapp.com/categories/${categoriaID}/products/${this.props.proid}`, {
@@ -64,7 +83,7 @@ class EditProduct extends React.Component{
                 categoriaId: categoriaID,
                 pro_descripcion: e.target.descripcionProduct.value,
                 
-                //pro_estado: 1,
+                pro_estado: 1,
             })
         })
         .then(res => res.json())
@@ -77,7 +96,10 @@ class EditProduct extends React.Component{
             this.setState({snackbaropen: true, snackbarmsg: "Ocurrio un error al guardar!"})
         })
     }
+
     render(){
+
+        const{categories}= this.state;
 
         return(
 
@@ -124,7 +146,6 @@ class EditProduct extends React.Component{
                                 type="hidden"
                                 name="productId"
                                 defaultValue={this.props.proid}
-                                //onChange={this.handleChangeProductId}
                                // disabled
                                 />
                                 </InputGroup>
@@ -156,27 +177,48 @@ class EditProduct extends React.Component{
                                     />
                                 </Form.Group>
 
-                                <Form.Group >
-                                    <Form.Control
-                                    type="text"
-                                    name="categoriaId"
-                                    placeholder="Categoria del producto"
-                                    defaultValue={this.props.proidcategoria}
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <br/>
+                                        <Form.File 
+                                        id="custom-file"
+                                        label="Seleccionar imagen..."
+                                        custom
+                                        data-browse="Abrir"
+                                        onChange={this.handleInputChange}
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} controlId="formGridPassword">
+                                    <img src={this.props.proimagen} alt="Producto"
+                                    style={{
+                                        border:'1px solid #c8cbce',
+                                        height:'80px',
+                                        float: 'right',
+                                        padding:'5px',
+                                        borderRadius:'4px'
+                                    }} 
                                     />
-                                </Form.Group>
+                                    </Form.Group>
+                                </Form.Row>
 
-                                <Form.Group>
-                                    <input
-                                    id="exampleFormControlFile1" 
-                                    label="Imagen del producto"
-                                    name="imagenProduct" 
-                                    type="file"
-                                    defaultValue={this.props.proimagen}
-                                    onChange={this.handleInputChange}
-                                    />
-                                </Form.Group>
-
-
+                                <InputLabel id="demo-simple-select-label">Categoría del producto:</InputLabel>
+                                <Select
+                                style={{
+                                    width: "100%"
+                                }}
+                                required
+                                defaultValue={this.props.proidcategoria}
+                                name="categoriaId"
+                                value={this.state.categoriaID} 
+                                onChange={this.handleChangeCatID}>
+                                    {categories && categories.map(cat => 
+                                    <MenuItem key={cat.id} value={cat.id}>{cat.cat_nombre}</MenuItem>
+                                    )}
+                                </Select>
+                                <br/>
+                                <br/>
+                                
                                 <Form.Group controlId="exampleForm.ControlTextarea1">
                                     <Form.Label>Descripción del producto</Form.Label>
                                     <Form.Control 
@@ -188,7 +230,7 @@ class EditProduct extends React.Component{
                                 </Form.Group>
                                 <br/>
                                 <Form.Group>
-                                    <Button variant="primary" type="submit">Guardar</Button>
+                                    <Button variant="primary" type="submit" style={{float:'right'}}>Guardar</Button>
                                 </Form.Group>
                             </Form>
                         </Col>

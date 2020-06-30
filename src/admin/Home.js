@@ -4,8 +4,6 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import RegisterCategory from "./RegisterCategory";
 import ListCategory from "./ListCategory";
 import ProductList from "./ProductList";
-import RegisterProduct from "./RegisterProduct";
-import EditProduct from "./EditProduct";
 
 export default class Home extends Component {
   state={token:this.props.token, login:this.props.login}
