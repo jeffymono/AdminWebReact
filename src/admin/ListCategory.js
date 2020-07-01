@@ -10,7 +10,9 @@ import UpdateAllCategory  from "./UpdateAllCategory";
 import DeleteCategory from './DeleteCategory'
 
 export default class ListCategory extends Component {
+  mounted= false
   constructor(props) {
+    
     super(props);
     this.state = {
       categoryData: [],

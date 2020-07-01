@@ -7,7 +7,7 @@ import EditProduct from './EditProduct';
 import DeleteProduct from './DeleteProduct';
 
 class ProductList extends Component{
-
+mounted=false
     constructor(props){
         super(props);
         this.state ={
@@ -20,8 +20,10 @@ class ProductList extends Component{
     }
 
     componentDidMount(){
-        this.refreshList();
-
+        this.mounted=true
+        if(this.mounted){
+            this.refreshList();
+        }
     }
 
     refreshList(){
@@ -49,7 +51,7 @@ class ProductList extends Component{
     }
 
     componentWillUnmount(){
-        this.refreshList()
+        this.mounted= false
     }
 
     render(){
@@ -58,7 +60,6 @@ class ProductList extends Component{
         let addModalClose =() => this.setState({addModalShow : false})
         let editModalClose =() => this.setState({editModalShow : false})
         let deleteModalClose =() => this.setState({deleteModalShow : false})
-
         return(
             <div className="container-sm">
                 <br/>
