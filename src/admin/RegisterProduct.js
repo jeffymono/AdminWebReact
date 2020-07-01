@@ -1,5 +1,5 @@
 import React from "react"
-import { Modal, Button, Row, Col, Form} from 'react-bootstrap'
+import { Modal, Button, Row, Col, Form, InputGroup, FormControl} from 'react-bootstrap'
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar'
@@ -79,6 +79,7 @@ class RegisterProduct extends React.Component{
                 pro_imagen: selectedFile,
                 pro_dimesiones: e.target.dimensionesProduct.value,
                 categoriaId: e.target.categoriaId.value,
+                pro_enlace: e.target.enlaceProduct.value,
                 pro_descripcion: e.target.descripcionProduct.value,
                 pro_estado: 1,
             })
@@ -137,24 +138,24 @@ class RegisterProduct extends React.Component{
                     <Row>
                         <Col sm={12}>
                             <Form onSubmit={this.handleSubmit}>
-                            
-                                <Form.Group>
-                                    <Form.Control
-                                    type="text"
-                                    name="marcaProduct"
-                                    
-                                    placeholder="Marca del producto"
-                                    />
-                                </Form.Group>
 
-                                <Form.Group >
-                                    <Form.Control
-                                    type="text"
-                                    name="modeloProduct"
-                                    
-                                    placeholder="Modelo del producto"
-                                    />
-                                </Form.Group>
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="formGridEmail">
+                                        <Form.Control
+                                        type="text"
+                                        name="marcaProduct"
+                                        placeholder="Marca del producto"
+                                        />
+                                        </Form.Group>
+
+                                    <Form.Group as={Col} controlId="formGridPassword">
+                                        <Form.Control
+                                        type="text"
+                                        name="modeloProduct"
+                                        placeholder="Modelo del producto"
+                                        />
+                                    </Form.Group>
+                                </Form.Row>
 
                                 <Form.Group >
                                     <Form.Control
@@ -188,6 +189,7 @@ class RegisterProduct extends React.Component{
                                     />
                                     </Form.Group>
                                 </Form.Row>
+                            
                                 <InputLabel id="demo-simple-select-label">Seleccionar categoría:</InputLabel>
                                 <Select
                                 style={{
@@ -203,6 +205,20 @@ class RegisterProduct extends React.Component{
                                 </Select>
                                 <br/>
                                 <br/>
+                                <InputLabel id="demo-simple-select-label">Ingresa el enlace del producto</InputLabel>
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Prepend>
+                                    <InputGroup.Text id="basic-addon3">
+                                        https://producto/...
+                                    </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl 
+                                    id="basic-url" 
+                                    aria-describedby="basic-addon3"
+                                    name="enlaceProduct"
+                                     />
+                                </InputGroup> 
+
                                 <Form.Group controlId="exampleForm.ControlTextarea1">
                                     <Form.Control 
                                     as="textarea" 
