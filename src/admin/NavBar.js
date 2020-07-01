@@ -8,7 +8,7 @@ export default class NavBar extends Component {
     if (this.state.login) {
       return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-          <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+          <Navbar.Brand href="#home">Administrador Xiaominario</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
@@ -23,21 +23,17 @@ export default class NavBar extends Component {
               </NavDropdown>
               <NavDropdown title="Productos" id="collasible-nav-dropdown">
                 {/*<NavDropdown.Item as={Link} to='/RegisterProduct'>Registro de productos</NavDropdown.Item>*/}
-                <NavDropdown.Item as={Link} to='/Home/ProductList'>
+                <NavDropdown.Item as={Link} to='Home/ProductList'>
                   Lista de productos
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="#action/3.4">
-                  Separated link
+                  Productos eliminados
             </NavDropdown.Item>
               </NavDropdown>
             </Nav>
             <Nav>
-              <Nav.Link href="#deets">More deets</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes">
-                Dank memes
-              </Nav.Link>
+             
               <Button
                 size="sm"
                 variant="outline-light"

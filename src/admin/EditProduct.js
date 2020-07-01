@@ -40,7 +40,7 @@ class EditProduct extends React.Component{
     }
 }
     componentWillUnmount(){
-this.mounted=false
+        this.mounted=false
     }
     handleInputChange(event) {
         let files = event.target.files;
@@ -86,6 +86,7 @@ this.mounted=false
                 pro_imagen: selectedFile,
                 pro_dimesiones: e.target.dimensionesProduct.value,
                 categoria_id: e.target.categoriaId.value,
+                pro_enlace: e.target.enlaceProduct.value,
                 pro_descripcion: e.target.descripcionProduct.value,
                 
                 pro_estado: 1,
@@ -155,23 +156,25 @@ this.mounted=false
                                 />
                                 </InputGroup>
 
-                                <Form.Group>
-                                    <Form.Control
-                                    type="text"
-                                    name="marcaProduct"
-                                    defaultValue={this.props.promarca}
-                                    placeholder="Marca del producto"
-                                    />
-                                </Form.Group>
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="formGridEmail">
+                                        <Form.Control
+                                        type="text"
+                                        name="marcaProduct"
+                                        defaultValue={this.props.promarca}
+                                        placeholder="Marca del producto"
+                                        />
+                                    </Form.Group>
 
-                                <Form.Group >
-                                    <Form.Control
-                                    type="text"
-                                    name="modeloProduct"
-                                    defaultValue={this.props.promodelo}
-                                    placeholder="Modelo del producto"
-                                    />
-                                </Form.Group>
+                                    <Form.Group as={Col} controlId="formGridPassword">
+                                        <Form.Control
+                                        type="text"
+                                        name="modeloProduct"
+                                        defaultValue={this.props.promodelo}
+                                        placeholder="Modelo del producto"
+                                        />
+                                    </Form.Group>
+                                </Form.Row>
 
                                 <Form.Group >
                                     <Form.Control
@@ -223,6 +226,17 @@ this.mounted=false
                                 </Select>
                                 <br/>
                                 <br/>
+                                <InputLabel id="demo-simple-select-label">Enlace del producto</InputLabel>
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Prepend>
+                                    </InputGroup.Prepend>
+                                    <FormControl 
+                                    id="basic-url" 
+                                    aria-describedby="basic-addon3"
+                                    name="enlaceProduct"
+                                    defaultValue={this.props.proenlace}
+                                     />
+                                </InputGroup> 
                                 
                                 <Form.Group controlId="exampleForm.ControlTextarea1">
                                     <Form.Label>Descripción del producto</Form.Label>

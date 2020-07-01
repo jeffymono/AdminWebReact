@@ -7,7 +7,7 @@ import EditProduct from './EditProduct';
 import DeleteProduct from './DeleteProduct';
 
 class ProductList extends Component{
-mounted=false
+
     constructor(props){
         super(props);
         this.state ={
@@ -20,10 +20,8 @@ mounted=false
     }
 
     componentDidMount(){
-        this.mounted=true
-        if(this.mounted){
-            this.refreshList();
-        }
+        this.refreshList();
+
     }
 
     refreshList(){
@@ -41,7 +39,7 @@ mounted=false
     showUpdateModal(product){
         this.setState({editModalShow: true, proId: product.id, proMarca: product.pro_marca, 
             proModelo: product.pro_modelo, proDimensiones: product.pro_dimesiones,
-            proIdCategoria: product.categoria_id, proImagen: product.pro_imagen,
+            proIdCategoria: product.categoria_id, proImagen: product.pro_imagen, proEnlace: product.pro_enlace,
             proDescripcion: product.pro_descripcion })
     }
 
@@ -51,15 +49,16 @@ mounted=false
     }
 
     componentWillUnmount(){
-        this.mounted= false
+        this.refreshList()
     }
 
     render(){
 
-        const{prods, proId, proMarca, proModelo, proDimensiones, proIdCategoria, proImagen, proDescripcion} = this.state;
+        const{prods, proId, proMarca, proModelo, proDimensiones, proIdCategoria, proImagen, proEnlace, proDescripcion} = this.state;
         let addModalClose =() => this.setState({addModalShow : false})
         let editModalClose =() => this.setState({editModalShow : false})
         let deleteModalClose =() => this.setState({deleteModalShow : false})
+
         return(
             <div className="container-sm">
                 <br/>
@@ -102,7 +101,7 @@ mounted=false
                         <td>{product.pro_descripcion}</td>
                         <td>{product.pro_dimesiones}</td>
                         <td>{product.categoria_id}</td>
-                        <td style={{ textAlign: "center"}}><img src={`${product.pro_imagen}`} style={{width: '30px'}} alt="Red dot" /></td>
+                        <td style={{ textAlign: "center"}}><img src={`${product.pro_imagen}`} style={{width: '30px'}} alt="Product" /></td>
                         <td>
                             <ButtonToolbar style={{ textAlign: "center"}}>
                                 <Button variant="success"
@@ -135,6 +134,7 @@ mounted=false
                     proimagen = {proImagen}
                     prodimensiones = {proDimensiones}
                     proidcategoria = {proIdCategoria}
+                    proenlace = {proEnlace}
                     prodescripcion = {proDescripcion}
                     token={this.state.token}
                 /> 
