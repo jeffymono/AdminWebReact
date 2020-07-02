@@ -159,7 +159,8 @@ class RegisterProduct extends React.Component{
 
                                 <Form.Group >
                                     <Form.Control
-                                    type="text"
+                                    as="textarea" 
+                                    rows="1"
                                     name="dimensionesProduct"
                                     placeholder="Dimensiones del producto"
                                     />

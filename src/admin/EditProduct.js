@@ -178,7 +178,8 @@ class EditProduct extends React.Component{
 
                                 <Form.Group >
                                     <Form.Control
-                                    type="text"
+                                    as="textarea" 
+                                    rows="1"
                                     name="dimensionesProduct"
                                     defaultValue={this.props.prodimensiones}
                                     placeholder="Dimensiones del producto"
