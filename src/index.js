@@ -4,6 +4,7 @@ import {BrowserRouter as Router} from 'react-router-dom'
 import Login from './admin/Login';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './index.css';
 
 

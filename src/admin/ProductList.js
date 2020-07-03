@@ -101,7 +101,7 @@ class ProductList extends Component{
                         <td>{product.pro_descripcion}</td>
                         <td>{product.pro_dimesiones}</td>
                         <td>{product.categoria_id}</td>
-                        <td style={{ textAlign: "center"}}><img src={`${product.pro_imagen}`} style={{width: '30px'}} alt="Product" /></td>
+                        <td style={{ textAlign: "center"}}><img src={`${product.pro_imagen}`} style={{width: '65px'}} alt="Product" /></td>
                         <td>
                             <ButtonToolbar style={{ textAlign: "center"}}>
                                 <Button variant="success"

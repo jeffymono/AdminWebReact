@@ -2,9 +2,9 @@
   "name": "admin-web-react",
   "version": "0.1.0",
   "private": true,
-  "engines":{
-    "npm": "6.14.5",
-    "node": "14.4.0"
+  "engines": {
+    "node": "14.4.0",
+    "npm": "6.14.5"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.2",
@@ -13,6 +13,9 @@
     "@testing-library/user-event": "^7.2.1",
     "add": "^2.0.6",
     "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "jquery-react": "^1.0.0",
+    "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
