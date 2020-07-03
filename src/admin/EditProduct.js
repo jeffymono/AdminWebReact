@@ -95,7 +95,7 @@ class EditProduct extends React.Component{
         .then(res => res.json())
         .then((result) =>{
             //alert(result);
-            this.setState({snackbaropen: true, snackbarmsg: "Producto guardado exitosamente!"})
+            this.setState({snackbaropen: true, snackbarmsg: "Producto actualizado exitosamente!"})
         },
         (error) =>{
             //alert('Ocurrio un error')
